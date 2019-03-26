@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,21 +33,24 @@ public class CheckLoginServlet extends HttpServlet {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/register","root","");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","root");
+			Statement st = con.createStatement();
 			System.out.println("Connected to Database");
+			String usedb = "use register";
+			st.execute(usedb);
 			PreparedStatement pst=con.prepareStatement("select name from user_table where userid=? and password=?");
 			pst.setString(1,uid);
 			pst.setString(2,pwd);
 			ResultSet rs=pst.executeQuery();
 			if(rs.next()) {
 				String name=rs.getString(1);
-//				Cookie ck1=new Cookie("userid",uid);
-//				Cookie ck2=new Cookie("uname",name);
-//				response.addCookie(ck1);
-//				response.addCookie(ck2);
-				HttpSession session=request.getSession();
-				session.setAttribute("userid",uid);
-				session.setAttribute("uname",name);
+				Cookie ck1=new Cookie("userid",uid);
+				Cookie ck2=new Cookie("uname",name);
+				response.addCookie(ck1);
+				response.addCookie(ck2);
+//				HttpSession session=request.getSession();
+//				session.setAttribute("userid",uid);
+//				session.setAttribute("uname",name);
 				response.sendRedirect("home");
 			}else {
 //				out.println("<h2 align=\"center\">Sorry! Login Fail</h2>");

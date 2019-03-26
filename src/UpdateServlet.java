@@ -34,7 +34,7 @@ public class UpdateServlet extends HttpServlet {
 		rd.include(request, response);
 		try{
 			Class.forName("com.mysql.jdbc.Driver");		
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/register","root","");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/register","root","root");
 			PreparedStatement pst=con.prepareStatement("update user_table set name=?,city=?,email=?,salary=? where userid=?");
 			
 			

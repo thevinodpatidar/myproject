@@ -30,7 +30,7 @@ public class DetailsServlet extends HttpServlet {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/register","root","");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/register","root","root");
 			System.out.println("Connected to Database");
 			PreparedStatement pst=con.prepareStatement("select * from user_table where userid=?");
 			pst.setString(1,uid);
